@@ -1,0 +1,21 @@
+[[source]]
+name = "pypi"
+url = "https://pypi.org/simple"
+verify_ssl = true
+
+[dev-packages]
+pytest = "*"
+black = "*"
+
+[packages]
+
+[requires]
+python_version = "3.8"
+
+[scripts]
+format = "black result"
+test-format = "black result --check"
+test-unit = "pytest -s result/test.py --disable-pytest-warnings"
+
+[pipenv]
+allow_prereleases = true
