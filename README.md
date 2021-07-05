@@ -68,7 +68,7 @@ To easily convert a function to return `Result`, you can use `resultify()`:
 Ok('value')
 ```
 
-You can similarly auto-capture exceptions using `resultify(...)`. Please note that you can provide multiple exception! 
+You can similarly auto-capture exceptions using `resultify(...)`. Please note that you can provide multiple exception! This is primarily useful when modeling code paths with a single good branch and multiple early `raise`s, where one does not have to concern oneself with annoying `try ... catch ...` statements.
 
 ```
 >>> @resultify(TypeError)
