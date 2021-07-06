@@ -1,6 +1,5 @@
 from functools import wraps
-from collections.abc import Callable
-from typing import Any, Generic, TypeVar, Union, Type
+from typing import Any, Generic, TypeVar, Union, Type, Callable
 
 T = TypeVar("T")  # Success type
 E = TypeVar("E")  # Error type

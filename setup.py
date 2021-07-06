@@ -23,5 +23,5 @@ setup(
     ],
     keywords="rust result",
     packages=["resultify"],
-    python_requires=">=3.6",
+    python_requires=">=3.8",
 )
