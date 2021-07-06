@@ -6,16 +6,15 @@ verify_ssl = true
 [dev-packages]
 pytest = "*"
 black = "*"
+twine = "*"
+pre-commit = "*"
 
 [packages]
 
-[requires]
-python_version = "3.8"
-
 [scripts]
-format = "black result"
-test-format = "black result --check"
-test-unit = "pytest -s result/test.py --disable-pytest-warnings"
+format = "black resultify test"
+test-format = "black resultify test --check"
+test-unit = "pytest -s test"
 
 [pipenv]
 allow_prereleases = true

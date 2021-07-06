@@ -1,8 +1,11 @@
+# Resultify
+
 This is an opinionated, simplified fork of [dbrgn/result](https://github.com/dbrgn/result).
 
 Result is a simple, type annotated Result type for Python 3 inspired by [Rust](https://doc.rust-lang.org/std/result/).
 
 The idea is that a result value can be either `Ok(value)` or `Err(error)`, with a way to differentiate between the two. `Ok` and `Err` are both classes wrapping an arbitrary value. `Result[T, E]` is a generic type alias for `typing.Union[Ok[T], Err[E]]`.
+
 
 ### Caveats
 
@@ -18,7 +21,7 @@ By using `.is_ok()` and `is_err()` to check for `Ok` or `Err` you get type safe 
 Creating an instance:
 
 ```
->>> from result import Ok, Err
+>>> from resultify import Ok, Err
 >>> ok = Ok('yay')
 >>> res2 = Err('nay')
 ```
@@ -41,11 +44,11 @@ Unwrap a `Result`, or raise if trying to extract a result from an error from a r
 >>> ok.ok()
 'yay'
 >>> ok.err()
-result.UnwrapError: Cannot unwrap error from Ok: Ok('yay')
+resultify.UnwrapError: Cannot unwrap error from Ok: Ok('yay')
 >>> err.err()
 'nay'
 >>> err.ok()
-result.UnwrapError: Cannot unwrap value from Err: Err('nay')
+resultify.UnwrapError: Cannot unwrap value from Err: Err('nay')
 ```
 
 For your convenience, and to appease the type checkers, simply creating an `Ok` result without value is the same as using `True`:
@@ -59,7 +62,7 @@ True
 To easily convert a function to return `Result`, you can use `resultify()`:
 
 ```
->>> from result import resultify
+>>> from resultify import resultify
 >>> @resultify()
 ... def a():
 ...     return "value"
@@ -68,7 +71,7 @@ To easily convert a function to return `Result`, you can use `resultify()`:
 Ok('value')
 ```
 
-You can similarly auto-capture exceptions using `resultify(...)`. Please note that you can provide multiple exception! This is primarily useful when modeling code paths with a single good branch and multiple early `raise`s, where one does not have to concern oneself with annoying `try ... catch ...` statements.
+You can similarly auto-capture exceptions using `resultify(...)`. Please note that you can provide multiple exceptions, or none if you don't want to catch the exception! This is primarily useful when modeling code paths with a single good branch and multiple early `raise`s, where one does not have to concern oneself with annoying `try ... catch ...` statements.
 
 ```
 >>> @resultify(TypeError)
@@ -80,6 +83,7 @@ Err(TypeError())
 ```
 
 Since documentation always lies, please refer to the unit tests for examples of usage.
+
 
 ### License
 

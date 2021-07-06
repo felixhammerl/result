@@ -1,5 +1,6 @@
 from functools import wraps
-from typing import Any, Generic, TypeVar, Union
+from collections.abc import Callable
+from typing import Any, Generic, TypeVar, Union, Type
 
 T = TypeVar("T")  # Success type
 E = TypeVar("E")  # Error type
@@ -99,10 +100,12 @@ class UnwrapError(Exception):
         super().__init__(message)
 
 
-def resultify(*errors):
-    def decorator(function):
+def resultify(*errors: Type[Exception]):
+    def decorator(
+        function: Callable[..., T]
+    ) -> Callable[..., Union[Ok[T], Err[Exception]]]:
         @wraps(function)
-        def inner(*args, **kwargs) -> Result:
+        def inner(*args, **kwargs):
             try:
                 return Ok(function(*args, **kwargs))
             except errors as e:

@@ -2,7 +2,7 @@
 
 import pytest
 
-from result import Err, Ok, UnwrapError, resultify
+from resultify import Err, Ok, UnwrapError, resultify
 
 
 class TestOk:
@@ -59,6 +59,16 @@ class TestResultify:
         x = foo()
         assert isinstance(x, Ok)
         assert x.ok() == val
+
+    def test_should_not_catch_exception_when_none_provided(self):
+        val = TypeError()
+
+        @resultify()
+        def foo():
+            raise val
+
+        with pytest.raises(TypeError):
+            foo()
 
     def test_should_resultify_to_err(self):
         val = TypeError()

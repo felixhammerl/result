@@ -1,0 +1,21 @@
+repos:
+  - repo: local
+    hooks:
+      - id: format
+        name: Formatting test
+        entry: pipenv run test-format
+        language: python
+        types: [python]
+        pass_filenames: false
+        verbose: true
+        stages: [commit]
+        additional_dependencies: []
+      - id: unittest
+        name: Unit test
+        entry: pipenv run test-unit
+        language: python
+        types: [python]
+        pass_filenames: false
+        verbose: true
+        stages: [commit]
+        additional_dependencies: []
