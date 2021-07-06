@@ -1,0 +1,3 @@
+include resultify/py.typed
+prune test/
+include LICENSE  README.md
