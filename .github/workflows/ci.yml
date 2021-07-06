@@ -25,6 +25,9 @@ jobs:
       - name: Install pipenv
         run: python -m pip install --upgrade pipenv wheel
 
+      - name: Setup Pipenv
+        run: pipenv --python ${{ matrix.python }}
+
       - name: Install pip dependencies
         run: pipenv install --deploy --dev --pre
 
