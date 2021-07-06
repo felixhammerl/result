@@ -1,3 +1,2 @@
-include resultify/py.typed
+include resultify/py.typed LICENSE README.md VERSION
 prune test/
-include LICENSE  README.md

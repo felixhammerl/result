@@ -3,9 +3,9 @@ from setuptools import setup
 
 setup(
     name="resultify",
-    version="1.0.0",
+    version=open("VERSION", "r").read().strip(),
     description="A rust-like result type for Python",
-    long_description=open("README.md").read(),
+    long_description=open("README.md", "r").read(),
     long_description_content_type="text/markdown",
     url="https://github.com/felixhammerl/resultify",
     author="Felix Hammerl",
