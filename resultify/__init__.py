@@ -1,3 +1,4 @@
+from time import sleep
 from functools import wraps
 from typing import Any, Generic, TypeVar, Union, Type, Callable
 
@@ -111,5 +112,27 @@ def resultify(*errors: Type[Exception]):
                 return Err(e)
 
         return inner
+
+    return decorator
+
+
+def retry(retries: int = 0, delay: int = 0, initial_delay: int = 0):
+    def decorator(
+        function: Callable[..., Union[Ok[T], Err[E]]]
+    ) -> Callable[..., Union[Ok[T], Err[E]]]:
+        @wraps(function)
+        def func_with_retries(*args, **kwargs) -> Union[Ok[T], Err[E]]:
+            sleep(initial_delay)
+            _retries = retries
+            res: Union[Ok[T], Err[E]] = function(*args, **kwargs)
+            while _retries >= 1:
+                if res.is_ok():
+                    break
+                sleep(delay)
+                _retries -= 1
+                res = function(*args, **kwargs)
+            return res
+
+        return func_with_retries
 
     return decorator

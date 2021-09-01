@@ -84,6 +84,19 @@ You can similarly auto-capture exceptions using `resultify(...)`. Please note th
 Err(TypeError())
 ```
 
+
+You can `retry` a function that returns a `Result` type with a constant backoff.
+
+```
+>>> from resultify import resultify, retry
+... @retry(retries=2, delay=2, initial_delay=1):
+... @resultify(Exception)
+... def foo():
+...     # do something that needs retrying here
+```
+
+This example waits 1 second before executing the initial call, then attempts the initial call, then executes two retries, spaces out two seconds from the previous call. If any execution was a success, the `Ok` value will be returned. If the retries were exhausted and no `Ok` was returned, we return the `Err` value.
+
 Since documentation always lies, please refer to the unit tests for examples of usage.
 
 

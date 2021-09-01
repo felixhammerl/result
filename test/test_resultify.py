@@ -2,7 +2,7 @@
 
 import pytest
 
-from resultify import Err, Ok, UnwrapError, resultify
+from resultify import Err, Ok, UnwrapError, resultify, retry
 
 
 class TestOk:
@@ -124,3 +124,50 @@ class TestDunderMethods:
         n = Err("nay")
         assert isinstance(o, (Ok, Err))
         assert isinstance(n, (Ok, Err))
+
+
+class TestRetry:
+    def test_retry_fail(self):
+        class Config:
+            value = "asdfasdfasdf"
+            counter = 0
+            failing_tries = 999
+            retries = 2
+
+        config = Config()
+
+        @retry(retries=config.retries)
+        @resultify(Exception)
+        def foo():
+            config.counter += 1
+            if config.counter <= config.failing_tries:
+                raise TypeError()
+            else:
+                return config.value
+
+        x = foo()
+        assert isinstance(x, Err)
+        assert config.counter == 3
+
+    def test_retry_ok(self):
+        class Config:
+            value = "asdfasdfasdf"
+            counter = 0
+            failing_tries = 2
+            retries = 2
+
+        config = Config()
+
+        @retry(retries=config.retries)
+        @resultify(Exception)
+        def foo():
+            config.counter += 1
+            if config.counter <= config.failing_tries:
+                raise TypeError()
+            else:
+                return config.value
+
+        x = foo()
+        assert isinstance(x, Ok)
+        assert x.ok() == config.value
+        assert config.counter == 3
