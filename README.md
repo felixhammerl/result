@@ -97,6 +97,19 @@ You can `retry` a function that returns a `Result` type with a constant backoff.
 
 This example waits 1 second before executing the initial call, then attempts the initial call, then executes two retries, spaces out two seconds from the previous call. If any execution was a success, the `Ok` value will be returned. If the retries were exhausted and no `Ok` was returned, we return the `Err` value.
 
+For those running Python 3.10, you can make use of Python's **structural pattern** matching like this:
+
+```
+>>> from resultify import Ok, Err
+>>> ok = Ok('ok!')
+>>> match ok:
+...     case Ok(_value=foo): print(f"Yay {foo}")
+...     case Err(_value=foo): print(f"Nay {foo}")
+...
+Yay ok!
+```
+
+
 Since documentation always lies, please refer to the unit tests for examples of usage.
 
 
