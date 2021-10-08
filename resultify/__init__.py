@@ -11,6 +11,8 @@ class Ok(Generic[T]):
     A value that indicates success and which stores arbitrary data for the return value.
     """
 
+    __match_args__ = ("_value",)
+
     def __init__(self, value: T = True) -> None:
         self._value = value
 
@@ -49,6 +51,8 @@ class Err(Generic[E]):
     """
     A value that signifies failure and which stores arbitrary data for the error.
     """
+
+    __match_args__ = ("_value",)
 
     def __init__(self, value: E = True) -> None:
         self._value = value

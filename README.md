@@ -101,12 +101,18 @@ For those running Python 3.10, you can make use of Python's **structural pattern
 
 ```
 >>> from resultify import Ok, Err
->>> ok = Ok('ok!')
+>>> ok = Ok("ok!")
 >>> match ok:
-...     case Ok(_value=foo): print(f"Yay {foo}")
-...     case Err(_value=foo): print(f"Nay {foo}")
+...     case Ok(foo): print(f"Yay {foo}")
+...     case Err(foo): print(f"Nay {foo}")
 ...
 Yay ok!
+>>> no = Err("nope!")
+>>> match no:
+...     case Ok(foo): print(f"Yay {foo}")
+...     case Err(foo): print(f"Nay {foo}")
+...
+Nay nope!
 ```
 
 
