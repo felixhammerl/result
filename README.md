@@ -2,11 +2,11 @@
 
 This is an opinionated, simplified fork of [dbrgn/result](https://github.com/dbrgn/result).
 
-Result is a simple, type annotated Result type for Python 3.8+ inspired by [Rust](https://doc.rust-lang.org/std/result/).
+Result is a simple, type annotated Result type for Python 3.6+ inspired by [Rust](https://doc.rust-lang.org/std/result/).
 
 The idea is that a result value can be either `Ok(value)` or `Err(error)`, with a way to differentiate between the two. `Ok` and `Err` are both classes wrapping an arbitrary value. `Result[T, E]` is a generic type alias for `typing.Union[Ok[T], Err[E]]`.
 
-Requires Python 3.8 or higher!
+Requires Python 3.6 or higher!
 
 
 ### Caveats

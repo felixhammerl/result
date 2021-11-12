@@ -8,6 +8,7 @@ pytest = "*"
 black = "*"
 twine = "*"
 pre-commit = "*"
+typing-extensions = "*"
 
 [packages]
 
