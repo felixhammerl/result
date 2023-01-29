@@ -22,7 +22,7 @@ By using `.is_ok()` and `is_err()` to check for `Ok` or `Err` you get type safe 
 
 Creating an instance:
 
-```
+```py
 >>> from resultify import Ok, Err
 >>> ok = Ok('yay')
 >>> res2 = Err('nay')
@@ -30,7 +30,7 @@ Creating an instance:
 
 Type safe checking whether a result is `Ok` or `Err`.
 
-```
+```py
 >>> res = Ok('yay')
 >>> res.is_ok()
 True
@@ -40,7 +40,7 @@ False
 
 Unwrap a `Result`, or raise if trying to extract a result from an error from a result or vice-versa:
 
-```
+```py
 >>> ok = Ok('yay')
 >>> err = Err('nay')
 >>> ok.ok()
@@ -55,7 +55,7 @@ resultify.UnwrapError: Cannot unwrap value from Err: Err('nay')
 
 For your convenience, and to appease the type checkers, simply creating an `Ok` result without value is the same as using `True`:
 
-```
+```py
 >>> ok = Ok()
 >>> ok.ok()
 True
@@ -63,7 +63,7 @@ True
 
 To easily convert a function to return `Result`, you can use `resultify()`:
 
-```
+```py
 >>> from resultify import resultify
 >>> @resultify()
 ... def a():
@@ -75,7 +75,7 @@ Ok('value')
 
 You can similarly auto-capture exceptions using `resultify(...)`. Please note that you can provide multiple exceptions, or none if you don't want to catch the exception! This is primarily useful when modeling code paths with a single good branch and multiple early `raise`s, where one does not have to concern oneself with annoying `try ... catch ...` statements.
 
-```
+```py
 >>> @resultify(TypeError)
 ... def foo():
 ...     raise TypeError()
@@ -87,7 +87,7 @@ Err(TypeError())
 
 You can `retry` a function that returns a `Result` type with a constant backoff.
 
-```
+```py
 >>> from resultify import resultify, retry
 ... @retry(retries=2, delay=2, initial_delay=1):
 ... @resultify(Exception)
@@ -99,7 +99,7 @@ This example waits 1 second before executing the initial call, then attempts the
 
 For those running Python 3.10, you can make use of Python's **structural pattern** matching like this:
 
-```
+```py
 >>> from resultify import Ok, Err
 >>> ok = Ok("ok!")
 >>> match ok:
