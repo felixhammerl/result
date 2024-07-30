@@ -6,7 +6,9 @@ Result is a simple, type annotated Result type for Python 3.6+ inspired by [Rust
 
 The idea is that a result value can be either `Ok(value)` or `Err(error)`, with a way to differentiate between the two. `Ok` and `Err` are both classes wrapping an arbitrary value. `Result[T, E]` is a generic type alias for `typing.Union[Ok[T], Err[E]]`.
 
-Requires Python 3.6 or higher!
+Requires Python 3.8 or higher!
+
+NB: If you are using a Python version lower than 3.10, you will have to install `typing_extensions`!
 
 
 ### Caveats

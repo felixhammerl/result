@@ -1,6 +1,18 @@
 from time import sleep
 from functools import wraps
-from typing import Any, Generic, ParamSpec, TypeVar, Union, Type, Callable
+
+try:
+    from typing import Any, Generic, ParamSpec, TypeVar, Union, Type, Callable
+except ImportError:
+    from typing_extensions import (
+        Any,
+        Generic,
+        ParamSpec,
+        TypeVar,
+        Union,
+        Type,
+        Callable,
+    )
 
 T = TypeVar("T", bound=Any)  # Success type
 E = TypeVar("E", bound=Exception)  # Error type
