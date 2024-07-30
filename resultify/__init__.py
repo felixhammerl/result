@@ -2,8 +2,8 @@ from time import sleep
 from functools import wraps
 from typing import Any, Generic, TypeVar, Union, Type, Callable
 
-T = TypeVar("T")  # Success type
-E = TypeVar("E")  # Error type
+T = TypeVar("T", bound=Any)  # Success type
+E = TypeVar("E", bound=Exception)  # Error type
 
 
 class Ok(Generic[T]):
@@ -104,10 +104,10 @@ class UnwrapError(Exception):
         super().__init__(message)
 
 
-def resultify(*errors: Type[Exception]):
+def resultify(*errors: Type[E]):
     def decorator(
         function: Callable[..., T]
-    ) -> Callable[..., Union[Ok[T], Err[Exception]]]:
+    ) -> Callable[..., Union[Ok[T], Err[E]]]:
         @wraps(function)
         def inner(*args, **kwargs):
             try:
