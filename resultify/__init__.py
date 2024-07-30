@@ -1,9 +1,10 @@
 from time import sleep
 from functools import wraps
-from typing import Any, Generic, TypeVar, Union, Type, Callable
+from typing import Any, Generic, ParamSpec, TypeVar, Union, Type, Callable
 
 T = TypeVar("T", bound=Any)  # Success type
 E = TypeVar("E", bound=Exception)  # Error type
+P = ParamSpec("P")
 
 
 class Ok(Generic[T]):
@@ -104,8 +105,10 @@ class UnwrapError(Exception):
         super().__init__(message)
 
 
-def resultify(*errors: Type[E]):
-    def decorator(function: Callable[..., T]) -> Callable[..., Union[Ok[T], Err[E]]]:
+def resultify(
+    *errors: Type[E],
+) -> Callable[[Callable[P, T]], Callable[P, Result[T, E]]]:
+    def decorator(function: Callable[P, T]) -> Callable[P, Result[T, E]]:
         @wraps(function)
         def inner(*args, **kwargs):
             try:
