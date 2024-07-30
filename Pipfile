@@ -9,6 +9,8 @@ black = "*"
 twine = "*"
 pre-commit = "*"
 typing-extensions = "*"
+tomli = "*"
+exceptiongroup = "*"
 
 [packages]
 
