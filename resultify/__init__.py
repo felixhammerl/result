@@ -105,9 +105,7 @@ class UnwrapError(Exception):
 
 
 def resultify(*errors: Type[E]):
-    def decorator(
-        function: Callable[..., T]
-    ) -> Callable[..., Union[Ok[T], Err[E]]]:
+    def decorator(function: Callable[..., T]) -> Callable[..., Union[Ok[T], Err[E]]]:
         @wraps(function)
         def inner(*args, **kwargs):
             try:

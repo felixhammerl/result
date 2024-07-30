@@ -116,7 +116,7 @@ class TestDunderMethods:
         assert len({Ok("a"), Err("a")}) == 2
 
     def test_repr(self):
-        assert Ok(u"£10") == eval(repr(Ok(u"£10")))
+        assert Ok("£10") == eval(repr(Ok("£10")))
         assert Ok("£10") == eval(repr(Ok("£10")))
 
     def test_isinstance_result_type(self):
