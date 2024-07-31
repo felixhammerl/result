@@ -13,7 +13,7 @@ class TestOk:
 
     def test_default_constructor(self):
         ok = Ok()
-        assert ok.ok() is True
+        assert ok.ok() is None
 
     def test_parameterized_constructor(self):
         value = "value"
@@ -29,21 +29,18 @@ class TestOk:
 
 class TestErr:
     def test_indicators(self):
-        err = Err()
+        err = Err(ValueError())
         assert err.is_ok() is False
         assert err.is_err() is True
 
-    def test_default_contructor(self):
-        err = Err()
-        assert err.err() is True
-
     def test_parameterized_contructor(self):
-        value = "value"
+        value = ValueError()
         err = Err(value)
         assert err.err() == value
 
     def test_err_getter_raises(self):
-        err = Err()
+        value = ValueError()
+        err = Err(value)
         with pytest.raises(UnwrapError):
             err.ok()
 
@@ -101,27 +98,31 @@ class TestResultify:
 
 class TestDunderMethods:
     def test_eq(self):
+        value = ValueError()
+        other_value = ValueError()
         assert Ok(1) == Ok(1)
-        assert Err(1) == Err(1)
-        assert Ok(1) != Err(1)
+        assert Err(value) == Err(value)
+        assert Ok(1) != Err(value)
         assert Ok(1) != Ok(2)
-        assert Err(1) != Err(2)
+        assert Err(value) != Err(other_value)
         assert not (Ok(1) != Ok(1))
         assert Ok(1) != "abc"
         assert Ok("0") != Ok(0)
 
     def test_hash(self):
-        assert len({Ok(1), Err("2"), Ok(1), Err("2")}) == 2
+        value = ValueError()
+        assert len({Ok(1), Err(value), Ok(1), Err(value)}) == 2
         assert len({Ok(1), Ok(2)}) == 2
-        assert len({Ok("a"), Err("a")}) == 2
+        assert len({Ok("a"), Err(value)}) == 2
 
     def test_repr(self):
         assert Ok("£10") == eval(repr(Ok("£10")))
         assert Ok("£10") == eval(repr(Ok("£10")))
 
     def test_isinstance_result_type(self):
+        value = ValueError()
         o = Ok("yay")
-        n = Err("nay")
+        n = Err(value)
         assert isinstance(o, (Ok, Err))
         assert isinstance(n, (Ok, Err))
 

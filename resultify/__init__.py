@@ -26,7 +26,7 @@ class Ok(Generic[T]):
 
     __match_args__ = ("_value",)
 
-    def __init__(self, value: T = True) -> None:
+    def __init__(self, value: T = None) -> None:
         self._value = value
 
     def __repr__(self) -> str:
@@ -67,7 +67,7 @@ class Err(Generic[E]):
 
     __match_args__ = ("_value",)
 
-    def __init__(self, value: E = True) -> None:
+    def __init__(self, value: E) -> None:
         self._value = value
 
     def __repr__(self) -> str:
@@ -133,10 +133,10 @@ def resultify(
     return decorator
 
 
-def retry(retries: int = 0, delay: int = 0, initial_delay: int = 0):
-    def decorator(
-        function: Callable[..., Union[Ok[T], Err[E]]]
-    ) -> Callable[..., Union[Ok[T], Err[E]]]:
+def retry(
+    retries: int = 0, delay: int = 0, initial_delay: int = 0
+) -> Callable[[Callable[P, T]], Callable[P, Result[T, E]]]:
+    def decorator(function: Callable[P, T]) -> Callable[P, Result[T, E]]:
         @wraps(function)
         def func_with_retries(*args, **kwargs) -> Union[Ok[T], Err[E]]:
             sleep(initial_delay)
